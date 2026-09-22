@@ -113,12 +113,16 @@ async def _postar_link(update: Update, context: ContextTypes.DEFAULT_TYPE, url: 
                 "(meli.la/...), ou adicione o produto à sua lista e mande o link de novo."
             )
             return
-        await publish(context, Offer(product, SOURCE_MANUAL))
+        # Já postado mais caro antes: destaca a queda de preço no post.
+        last = context.bot_data["history"].last_post(product.id)
+        previous_price = last.price if last and product.price < last.price else None
+        await publish(context, Offer(product, SOURCE_MANUAL, previous_price=previous_price))
     except Exception as e:
         log.exception("Erro no /postar %s", url)
         await update.message.reply_text(f"Erro: {e}")
         return
-    await update.message.reply_text(f"Postado no canal ✅\n{product.title}")
+    note = f"\n📉 Postado como queda de preço (antes R$ {previous_price:.2f})" if previous_price else ""
+    await update.message.reply_text(f"Postado no canal ✅\n{product.title}{note}")
 
 
 async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
