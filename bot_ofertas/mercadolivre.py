@@ -50,6 +50,8 @@ class Product:
     free_shipping: bool = False
     coupon: str | None = None  # ex.: "Cupom R$ 6,00 OFF"
     item_id: str | None = None  # anúncio (MLB-...), quando conhecido
+    badge: str | None = None  # selo do ML, ex.: "MAIS VENDIDO", "OFERTA DO DIA"
+    discount_label: str | None = None  # texto do desconto do ML, ex.: "38% OFF no Pix"
 
     @property
     def discount_percent(self) -> int:

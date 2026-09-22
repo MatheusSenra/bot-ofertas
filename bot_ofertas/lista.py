@@ -54,6 +54,7 @@ def _parse_card(card: dict) -> Product | None:
     url = meta.get("url")
     pictures = (card.get("pictures") or {}).get("pictures") or []
     coupons = [p for p in comps.get("promotions") or [] if p.get("type") == "coupon"]
+    shipping = comps.get("shipping") or {}
 
     return Product(
         id=product_id,
@@ -62,9 +63,12 @@ def _parse_card(card: dict) -> Product | None:
         original_price=(price.get("previous_price") or {}).get("value"),
         permalink=f"https://{url}" if url else PRODUCT_PAGE_URL.format(product_id=product_id),
         image=IMAGE_URL.format(picture_id=pictures[0]["id"]) if pictures else "",
-        free_shipping="grátis" in ((comps.get("shipping") or {}).get("text") or "").lower(),
+        # "additional_text" indica condição (ex.: "por ser sua primeira compra"); nesse caso não anunciamos.
+        free_shipping="grátis" in (shipping.get("text") or "").lower() and not shipping.get("additional_text"),
         coupon=_render_text(coupons[0]) if coupons else None,
         item_id=meta.get("id"),
+        badge=(comps.get("highlight") or {}).get("text"),
+        discount_label=(price.get("discount_label") or {}).get("text"),
     )
 
 

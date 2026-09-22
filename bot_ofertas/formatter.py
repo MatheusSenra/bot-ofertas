@@ -7,18 +7,37 @@ from .ofertas import Offer
 
 # Legenda de foto no Telegram aceita no máximo 1024 caracteres.
 MAX_TITLE_LENGTH = 200
+# Selos do Mercado Livre -> emoji. Selos desconhecidos usam 🏷️.
+BADGE_EMOJIS = {"RELÂMPAGO": "⚡", "OFERTA DO DIA": "📅", "MAIS VENDIDO": "🏆", "NOVIDADE": "🆕"}
+# Selos de ofertas que expiram: avisamos que o preço é temporário.
+TEMPORARY_BADGES = ("RELÂMPAGO", "OFERTA DO DIA")
+
+
+def _badge_line(badge: str) -> str:
+    upper = badge.upper()
+    emoji = next((e for key, e in BADGE_EMOJIS.items() if key in upper), "🏷️")
+    line = f"{emoji} <b>{escape(upper)}</b>"
+    if any(key in upper for key in TEMPORARY_BADGES):
+        line += "  ⏳ por tempo limitado"
+    return line
 
 
 def format_offer(offer: Offer, link: str) -> str:
     p = offer.product
     title = p.title if len(p.title) <= MAX_TITLE_LENGTH else p.title[: MAX_TITLE_LENGTH - 1] + "…"
 
-    header = "📉 <b>BAIXOU DE PREÇO!</b>" if offer.previous_price else "🔥 <b>OFERTA</b>"
-    lines = [header, "", f"<b>{escape(title)}</b>", ""]
+    header = []
+    if offer.previous_price:
+        header.append("📉 <b>BAIXOU DE PREÇO!</b>")
+    if p.badge:
+        header.append(_badge_line(p.badge))
+    lines = [*(header or ["🔥 <b>OFERTA</b>"]), "", f"<b>{escape(title)}</b>", ""]
 
     if p.discount_percent:
+        # Prefere o texto do ML, que diz quando o desconto é só no Pix.
+        discount = p.discount_label or f"{p.discount_percent}% OFF"
         lines.append(f"<s>{format_brl(p.original_price)}</s>")
-        lines.append(f"💰 <b>{format_brl(p.price)}</b>  ({p.discount_percent}% OFF)")
+        lines.append(f"💰 <b>{format_brl(p.price)}</b>  ({escape(discount)})")
     else:
         lines.append(f"💰 <b>{format_brl(p.price)}</b>")
     if offer.previous_price:
