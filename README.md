@@ -3,6 +3,13 @@
 Bot que posta ofertas do Mercado Livre num canal do Telegram usando seu link de
 afiliado, e converte links enviados no privado em links de afiliado.
 
+> ⚠️ **Aviso:** projeto independente e **não oficial**, sem vínculo com o Mercado Livre.
+> A leitura de listas e links de compartilhamento depende do layout das páginas do
+> Mercado Livre e pode parar de funcionar se o site mudar. Use respeitando os
+> [termos do Programa de Afiliados](https://www.mercadolivre.com.br/l/afiliados-primeiros-passos)
+> e da API do Mercado Livre. Os links de afiliado usam **os seus** parâmetros
+> (`ML_AFFILIATE_TOOL` / `ML_AFFILIATE_WORD`), e as comissões ficam com quem roda o bot.
+
 ## Como funciona
 
 A cada `POST_INTERVAL_MINUTES`, o bot posta **uma** oferta no canal. A escolha segue esta ordem:
