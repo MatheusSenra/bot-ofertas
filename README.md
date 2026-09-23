@@ -1,7 +1,14 @@
+<p align="center">
+  <img src="docs/marca/logo.png" alt="Eu que fiz Ofertas" width="220">
+</p>
+
 # Bot de Ofertas: Mercado Livre → Telegram
 
 Bot que posta ofertas do Mercado Livre num canal do Telegram usando seu link de
 afiliado, e converte links enviados no privado em links de afiliado.
+
+📄 **[Apresentação da solução (PDF)](docs/Eu-que-fiz-Ofertas_Apresentacao.pdf)** ·
+📢 Veja funcionando em **[t.me/euquefizofertas](https://t.me/euquefizofertas)**
 
 > ⚠️ **Aviso:** projeto independente e **não oficial**, sem vínculo com o Mercado Livre.
 > A leitura de listas e links de compartilhamento depende do layout das páginas do
@@ -45,6 +52,10 @@ bot_ofertas/
 │   └── testar_lista.py  # teste das listas de recomendação
 ├── deploy/
 │   └── bot-ofertas.service  # serviço systemd para rodar 24h em Linux
+├── docs/
+│   ├── marca/logo.png   # logotipo
+│   ├── src/             # HTML/CSS dos PDFs + gerar_pdfs.sh
+│   └── *.pdf            # apresentação da solução
 ├── data/                # histórico (gerado em runtime)
 ├── .env.example
 └── requirements.txt

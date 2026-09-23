@@ -6,3 +6,7 @@ data/*.db
 data/*.json
 data/*.log
 data/*.db-*
+
+# Documentação interna: contém dados do servidor, nunca publicar
+docs/*INTERNO*.pdf
+docs/src/interno.html

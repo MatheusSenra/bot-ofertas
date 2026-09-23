@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Eu que fiz Ofertas — Apresentação da solução</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  @page { @bottom-left { content: "Eu que fiz Ofertas  ·  t.me/euquefizofertas"; font: 600 8pt 'Inter', sans-serif; color: #9a9aad; } }
+  .problema { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 3mm 0 6mm; }
+  .problema .item { background: #fff4ea; border: 1px solid #ffd9bf; border-radius: 3mm; padding: 5mm 4mm; font-size: 9.8pt; color: #5a4a44; break-inside: avoid; }
+  .problema .item b { display: block; font: 400 17pt/1 'Lilita One', sans-serif; color: var(--orange); margin-bottom: 1.5mm; }
+  .antes-depois { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 4mm; }
+  .antes-depois .lado { border-radius: 3.5mm; padding: 6mm; break-inside: avoid; }
+  .antes-depois .antes { background: #f4f4f8; border: 1px solid #e3e3ec; }
+  .antes-depois .depois { background: var(--ink); color: #d4d4e4; }
+  .antes-depois .lado h4 { margin: 0 0 2mm; font: 400 13pt 'Lilita One', sans-serif; }
+  .antes-depois .antes h4 { color: #6b6b7b; }
+  .antes-depois .depois h4 { color: var(--yellow); }
+  .antes-depois ul { margin: 0; padding-left: 4.5mm; font-size: 10.4pt; }
+  .antes-depois li { margin-bottom: 2.4mm; }
+  .antes-depois .lado h4 { font-size: 16pt !important; margin-bottom: 3mm !important; }
+  .frase { margin-top: 7mm; text-align: center; font: 400 17pt/1.3 'Lilita One', sans-serif; color: var(--ink); }
+  .frase span { color: var(--orange); }
+  .kpi b { font-size: 24pt !important; }
+  .kpi { padding: 6mm 4mm !important; }
+  .card .ico { font: 400 17pt/1 'Lilita One', sans-serif; color: var(--orange); margin-bottom: 1.5mm; }
+  .post .foto img { max-height: 40mm; max-width: 80mm; }
+  .post .foto { background: #fff; border-bottom: 1px solid var(--line); }
+  .post .canal { display: flex; align-items: center; gap: 2mm; padding: 3mm 4mm 0; font: 700 8.8pt 'Inter', sans-serif; color: var(--ink); }
+  .post .canal img { width: 7mm; }
+  .post .canal span { color: var(--muted); font-weight: 500; font-size: 7.8pt; margin-left: auto; }
+  .post .link { color: var(--tg); font-weight: 600; }
+  .anot { font-size: 9.3pt; }
+  .anot li { margin-bottom: 2.4mm; }
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="selo">Apresentação da solução</div>
+  <img class="logo" src="../marca/logo.png" alt="Eu que fiz Ofertas">
+  <h1>Ofertas no<br><span>piloto automático</span></h1>
+  <div class="sub">Um bot de Telegram que encontra, formata e publica ofertas do Mercado Livre com link de afiliado, 24 horas por dia, com custo zero de infraestrutura.</div>
+  <div class="rodape">
+    <span><b>t.me/euquefizofertas</b></span>
+    <span>Código aberto · <b>github.com/MatheusSenra/bot-ofertas</b></span>
+  </div>
+</div>
+
+<section>
+  <h2><span class="num">1</span>O desafio</h2>
+  <p class="lead">Manter um canal de ofertas ativo toma horas por dia. Cada post exige uma sequência manual e repetitiva.</p>
+  <div class="problema">
+    <div class="item"><b>Garimpar</b>procurar produtos com desconto de verdade</div>
+    <div class="item"><b>Converter</b>gerar o link de afiliado de cada produto</div>
+    <div class="item"><b>Montar</b>foto, preço, desconto, cupom e texto</div>
+    <div class="item"><b>Lembrar</b>o que já foi postado e em que preço</div>
+  </div>
+  <div class="antes-depois">
+    <div class="lado antes">
+      <h4>Antes</h4>
+      <ul>
+        <li>Posts só quando sobra tempo</li>
+        <li>Canal parado à noite e nos fins de semana</li>
+        <li>Risco de repetir produto ou errar preço</li>
+        <li>Link de afiliado copiado à mão</li>
+      </ul>
+    </div>
+    <div class="lado depois">
+      <h4>Depois</h4>
+      <ul>
+        <li>Uma oferta nova a cada 30 minutos</li>
+        <li>Canal ativo 24 horas, todos os dias</li>
+        <li>Histórico automático, sem repetições</li>
+        <li>Link de afiliado gerado em cada post</li>
+      </ul>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>48</b><span>posts por dia, no automático</span></div>
+    <div class="kpi"><b>24/7</b><span>no ar, em servidor na nuvem</span></div>
+    <div class="kpi"><b>1 link</b><span>para postar qualquer produto</span></div>
+    <div class="kpi"><b>R$ 0</b><span>de infraestrutura por mês</span></div>
+  </div>
+  <div class="frase">O afiliado passa a gastar tempo só com o que importa:<br><span>escolher boas ofertas.</span></div>
+</section>
+
+<section class="nova-pagina">
+  <h2><span class="num">2</span>Como funciona</h2>
+  <p class="lead">O afiliado faz a curadoria. O bot cuida de todo o resto, do garimpo ao post.</p>
+  <div class="fluxo">
+    <div class="no"><b>Curadoria</b>você adiciona produtos a uma lista no app do Mercado Livre</div>
+    <div class="seta">›</div>
+    <div class="no destaque"><b>Seleção</b>o bot escolhe a melhor oferta do momento</div>
+    <div class="seta">›</div>
+    <div class="no"><b>Montagem</b>foto, preço, desconto, selo, cupom e link de afiliado</div>
+    <div class="seta">›</div>
+    <div class="no tg"><b>Publicação</b>post no canal do Telegram</div>
+  </div>
+
+  <h3>Um post real do canal</h3>
+  <div class="lado-a-lado">
+    <div class="post">
+      <div class="canal"><img src="../marca/logo.png" alt="">Eu que fiz Ofertas<span>11:07</span></div>
+      <div class="foto" style="margin-top:2.5mm"><img src="https://http2.mlstatic.com/D_NQ_NP_719636-MLA99381510294_112025-F.jpg" alt="Power bank"></div>
+      <div class="corpo">
+        🔥 <b>OFERTA</b><br><br>
+        <b>Power Bank Basike 20000mAh Preto, Carga Rápida 22.5W para iPhone e Samsung</b><br><br>
+        <span class="riscado">R$ 213,88</span><br>
+        💰 <b>R$ 136,88</b> (36% OFF)<br><br>
+        🛒 <span class="link">Comprar no Mercado Livre</span>
+      </div>
+      <div class="botao">🛒 Ver oferta</div>
+    </div>
+    <div class="texto">
+      <ul class="check anot">
+        <li><strong>Foto e nome</strong> do produto, direto do Mercado Livre</li>
+        <li><strong>Preço antigo riscado</strong> e desconto calculado</li>
+        <li><strong>Selos</strong> como Mais vendido e Oferta do dia, quando existem</li>
+        <li><strong>Cupons</strong> disponíveis no momento</li>
+        <li><strong>Honestidade:</strong> avisa quando o desconto é só no Pix e só mostra frete grátis quando vale para todos</li>
+        <li><strong>Botão</strong> com o link de afiliado, pronto para o clique</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>De onde vêm as ofertas</h3>
+  <div class="grid g3">
+    <div class="card"><span class="tag">Prioridade 1</span><h4>Sua lista</h4><p>Produtos escolhidos por você numa lista do Mercado Livre, maior desconto primeiro.</p></div>
+    <div class="card"><span class="tag">Prioridade 2</span><h4>Baixou de preço</h4><p>Itens já postados que ficaram mais baratos voltam com o destaque "BAIXOU DE PREÇO!".</p></div>
+    <div class="card"><span class="tag">Prioridade 3</span><h4>Mais vendidos</h4><p>Quando a lista acaba, os mais vendidos de categorias escolhidas, em rodízio.</p></div>
+  </div>
+</section>
+
+<section class="nova-pagina">
+  <h2><span class="num">3</span>Recursos</h2>
+  <p class="lead">Tudo o que o afiliado precisa para manter o canal vivo, sem abrir o computador.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ico">01</div><h4>Postagem automática</h4><p>Uma oferta a cada 30 minutos (intervalo configurável), sem repetir produtos, com histórico de tudo o que já saiu.</p></div>
+    <div class="card"><div class="ico">02</div><h4>Post com um link</h4><p>Viu uma oferta no app? Toque em Compartilhar, mande o link ao bot com /postar e ela vai para o canal já formatada.</p></div>
+    <div class="card"><div class="ico">03</div><h4>Alerta de queda de preço</h4><p>O bot compara com o último preço postado e destaca quando o produto ficou mais barato.</p></div>
+    <div class="card"><div class="ico">04</div><h4>Conversor de links</h4><p>Qualquer pessoa manda um link do Mercado Livre no privado e recebe o link pronto para comprar apoiando o canal.</p></div>
+    <div class="card"><div class="ico">05</div><h4>Controle pelo Telegram</h4><p>/status mostra a próxima postagem e os últimos posts. Só o administrador tem acesso aos comandos.</p></div>
+    <div class="card"><div class="ico">06</div><h4>Informação correta</h4><p>Desconto só no Pix, frete condicional e cupons aparecem como o Mercado Livre informa, sem promessas falsas.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>Tecnologia</h2>
+  <p class="lead">Uma solução enxuta: um processo Python rodando 24h num servidor gratuito, sem banco de dados externo nem portas abertas.</p>
+  <div class="arq">
+    <div class="col">
+      <div class="bloco tg"><b>Telegram</b>canal de ofertas e conversa privada com o bot</div>
+    </div>
+    <div class="nucleo">
+      <div class="titulo">Bot de Ofertas</div>
+      <div class="mod">Seleção da oferta e histórico</div>
+      <div class="mod">Montagem do post e link de afiliado</div>
+      <div class="mod">Agendamento e comandos</div>
+    </div>
+    <div class="col">
+      <div class="bloco ml"><b>Mercado Livre</b>API oficial de catálogo e listas públicas</div>
+    </div>
+  </div>
+  <div class="stack">
+    <div class="card escuro"><h4>Python 3.12</h4><p>python-telegram-bot, httpx e SQLite</p></div>
+    <div class="card escuro"><h4>Oracle Cloud</h4><p>VM Always Free, sem custo mensal</p></div>
+    <div class="card escuro"><h4>Código aberto</h4><p>Licença MIT, disponível no GitHub</p></div>
+  </div>
+</section>
+
+<section class="nova-pagina">
+  <h2><span class="num">5</span>Por que funciona</h2>
+  <div class="grid g2" style="margin-bottom:6mm">
+    <div class="card"><span class="tag">Curadoria humana</span><h4>Você escolhe, o bot executa</h4><p>A lista de recomendação mantém o canal com a cara de quem faz a curadoria. A automação só entra para completar a grade.</p></div>
+    <div class="card"><span class="tag">Transparência</span><h4>Confiança do público</h4><p>Os links de afiliado são identificados, e o comprador paga o mesmo preço. Os posts mostram as condições reais da oferta.</p></div>
+    <div class="card"><span class="tag">Resiliência</span><h4>Sempre no ar</h4><p>Roda como serviço: volta sozinho se o servidor reiniciar ou se algo falhar, e retoma o ritmo de onde parou.</p></div>
+    <div class="card"><span class="tag">Responsabilidade</span><h4>Uso respeitoso</h4><p>Usa a API oficial e as páginas públicas, sem contornar proteções anti-robô do Mercado Livre.</p></div>
+  </div>
+
+  <div class="final">
+    <img src="../marca/logo.png" alt="Eu que fiz Ofertas">
+    <h2>Acompanhe e conheça o projeto</h2>
+    <p>Ofertas todos os dias no canal <a href="https://t.me/euquefizofertas" style="color:#ffc61a">t.me/euquefizofertas</a><br>
+    Código aberto em <a href="https://github.com/MatheusSenra/bot-ofertas" style="color:#ffc61a">github.com/MatheusSenra/bot-ofertas</a></p>
+    <p style="font-size:8pt;color:#8e8eaa;margin:4mm 0 0">Projeto independente, sem vínculo oficial com o Mercado Livre. Links de afiliado: quem compra paga o mesmo preço.</p>
+  </div>
+</section>
+
+</body>
+</html>

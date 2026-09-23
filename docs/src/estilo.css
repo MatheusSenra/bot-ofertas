@@ -1,0 +1,274 @@
+/* Identidade visual "Eu que fiz Ofertas" — compartilhada pelos PDFs. */
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=block');
+
+:root {
+  --ink: #12121f;       /* azul-marinho quase preto do logo */
+  --ink-2: #1e1e34;
+  --ink-3: #2c2c48;
+  --yellow: #ffc61a;
+  --amber: #ffa41b;
+  --orange: #ff7a00;
+  --tg: #229ed9;        /* azul do Telegram */
+  --paper: #fffdf7;
+  --cream: #fff4d6;
+  --text: #22222e;
+  --muted: #6b6b7b;
+  --line: #ece6d6;
+}
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm 16mm;
+  @bottom-left { content: var(--footer-label, ""); }
+  @bottom-right {
+    content: counter(page);
+    font: 700 9pt 'Inter', sans-serif;
+    color: #ffa41b;
+  }
+}
+@page capa { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } }
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  font: 400 10.2pt/1.55 'Inter', sans-serif;
+  color: var(--text);
+  background: #fff;
+}
+
+/* ---------- capa ---------- */
+.capa {
+  page: capa;
+  height: 297mm;
+  width: 210mm;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 36%, rgba(255, 198, 26, .22) 0, rgba(255, 198, 26, 0) 42%),
+    repeating-conic-gradient(from 0deg at 50% 36%, rgba(255, 198, 26, .07) 0deg 6deg, transparent 6deg 18deg),
+    var(--ink);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26mm 20mm 18mm;
+  break-after: page;
+}
+.capa .selo {
+  font: 700 8.5pt 'Inter', sans-serif;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  padding: 2.2mm 5mm;
+  border-radius: 99px;
+}
+.capa img.logo { width: 108mm; margin: 12mm 0 8mm; filter: drop-shadow(0 6mm 10mm rgba(0,0,0,.45)); }
+.capa h1 {
+  font: 400 36pt/1.02 'Lilita One', sans-serif;
+  text-align: center;
+  margin: 0;
+  color: #fff;
+}
+.capa h1 span { color: var(--yellow); }
+.capa .sub { font-size: 12.5pt; color: #d9d9e6; text-align: center; max-width: 150mm; margin-top: 5mm; }
+.capa .rodape {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9pt;
+  color: #b8b8cc;
+  border-top: 1px solid rgba(255,255,255,.14);
+  padding-top: 4mm;
+}
+.capa .rodape b { color: var(--yellow); font-weight: 700; }
+
+/* ---------- títulos ---------- */
+h2 {
+  font: 400 21pt/1.1 'Lilita One', sans-serif;
+  color: var(--ink);
+  margin: 0 0 3.5mm;
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+}
+h2 .num {
+  font: 400 12pt 'Lilita One', sans-serif;
+  background: var(--yellow);
+  color: var(--ink);
+  width: 9mm; height: 9mm;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none;
+  border: 1.2mm solid var(--cream);
+  box-sizing: content-box;
+}
+h3 {
+  font: 800 10.5pt 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--orange);
+  margin: 6mm 0 2mm;
+}
+section { margin-bottom: 9mm; }
+section.nova-pagina { break-before: page; }
+.lead { font-size: 11.5pt; color: var(--ink-3); margin: 0 0 4.5mm; }
+p { margin: 0 0 3mm; }
+a { color: var(--tg); text-decoration: none; font-weight: 600; }
+strong { color: var(--ink); }
+
+/* ---------- tabelas ---------- */
+table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 2mm 0 4mm; font-size: 9.2pt; break-inside: auto; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th {
+  background: var(--ink);
+  color: var(--yellow);
+  font-weight: 700;
+  text-align: left;
+  padding: 2.4mm 3mm;
+  font-size: 8.4pt;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+th:first-child { border-top-left-radius: 2.5mm; }
+th:last-child { border-top-right-radius: 2.5mm; }
+td { padding: 1.75mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; background: #fff; }
+tr:nth-child(even) td { background: #fffaeb; }
+tr:last-child td:first-child { border-bottom-left-radius: 2.5mm; }
+tr:last-child td:last-child { border-bottom-right-radius: 2.5mm; }
+td:first-child { font-weight: 600; color: var(--ink); }
+
+code {
+  font: 400 8.6pt 'JetBrains Mono', monospace;
+  background: var(--cream);
+  color: #7a3d00;
+  padding: .3mm 1.3mm;
+  border-radius: 1.2mm;
+  white-space: nowrap;
+}
+td code { white-space: nowrap; font-size: 8pt; }
+pre {
+  font: 400 8.8pt/1.6 'JetBrains Mono', monospace;
+  background: var(--ink);
+  color: #f3f3ff;
+  padding: 4mm 5mm;
+  border-radius: 3mm;
+  border-left: 1.6mm solid var(--yellow);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 2mm 0 4mm;
+  break-inside: avoid;
+}
+pre .c { color: #8e8eaa; }
+pre .y { color: var(--yellow); }
+
+/* ---------- componentes ---------- */
+.callout {
+  display: flex; gap: 4mm;
+  background: var(--cream);
+  border: 1px solid #ffe29a;
+  border-radius: 3mm;
+  padding: 3.5mm 4.5mm;
+  margin: 3mm 0 4mm;
+  break-inside: avoid;
+}
+.callout .ico { font: 400 15pt 'Lilita One', sans-serif; color: var(--orange); line-height: 1; }
+.callout.alerta { background: #fff0e6; border-color: #ffc8a3; }
+.callout.info { background: #eaf6fd; border-color: #b9e2f6; }
+.callout.info .ico { color: var(--tg); }
+.callout p:last-child { margin: 0; }
+
+.grid { display: grid; gap: 4mm; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: 1fr 1fr 1fr; }
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 3.5mm;
+  padding: 4.5mm;
+  break-inside: avoid;
+  position: relative;
+  overflow: hidden;
+}
+.card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1.4mm; background: var(--yellow); }
+.card h4 { margin: 0 0 1.5mm; font: 800 10.5pt 'Inter', sans-serif; color: var(--ink); }
+.card p { margin: 0; font-size: 9.3pt; color: #4a4a5a; }
+.card .tag { font: 700 7.5pt 'Inter', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.card.escuro { background: var(--ink); border-color: var(--ink); }
+.card.escuro h4 { color: var(--yellow); }
+.card.escuro p { color: #d4d4e4; }
+
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0 5mm; }
+.kpi { background: var(--ink); color: #fff; border-radius: 3mm; padding: 4mm; text-align: center; break-inside: avoid; }
+.kpi b { display: block; font: 400 20pt/1 'Lilita One', sans-serif; color: var(--yellow); margin-bottom: 1.5mm; }
+.kpi span { font-size: 8.2pt; color: #c9c9da; }
+
+/* diagrama de fluxo */
+.fluxo { display: flex; align-items: stretch; gap: 0; margin: 3mm 0 5mm; break-inside: avoid; }
+.fluxo .no {
+  flex: 1;
+  background: #fff;
+  border: 1.4px solid var(--ink);
+  border-radius: 3mm;
+  padding: 3mm;
+  text-align: center;
+  font-size: 8.6pt;
+  color: #4a4a5a;
+}
+.fluxo .no b { display: block; font: 800 9.4pt 'Inter', sans-serif; color: var(--ink); margin-bottom: .8mm; }
+.fluxo .no.destaque { background: var(--ink); color: #d4d4e4; }
+.fluxo .no.destaque b { color: var(--yellow); }
+.fluxo .no.tg { border-color: var(--tg); }
+.fluxo .no.tg b { color: var(--tg); }
+.fluxo .seta { flex: none; width: 8mm; display: flex; align-items: center; justify-content: center; color: var(--orange); font: 400 16pt 'Lilita One', sans-serif; }
+
+/* diagrama de arquitetura em camadas */
+.arq { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 4mm; align-items: center; margin: 3mm 0 5mm; break-inside: avoid; }
+.arq .col { display: flex; flex-direction: column; gap: 3mm; }
+.arq .bloco { border-radius: 3mm; padding: 3mm 3.5mm; font-size: 8.6pt; border: 1.4px solid var(--line); background: #fff; color: #4a4a5a; }
+.arq .bloco b { display: block; color: var(--ink); font-size: 9.4pt; }
+.arq .bloco.tg { border-color: var(--tg); } .arq .bloco.tg b { color: var(--tg); }
+.arq .bloco.ml { border-color: var(--amber); } .arq .bloco.ml b { color: #b86200; }
+.arq .nucleo { background: var(--ink); border-radius: 4mm; padding: 4mm; color: #d4d4e4; }
+.arq .nucleo .titulo { font: 400 13pt 'Lilita One', sans-serif; color: var(--yellow); text-align: center; margin-bottom: 2.5mm; }
+.arq .nucleo .mod { background: var(--ink-2); border: 1px solid var(--ink-3); border-radius: 2mm; padding: 1.6mm 2.5mm; margin-top: 1.8mm; font-size: 8.3pt; }
+.arq .nucleo .mod code { background: none; color: var(--yellow); padding: 0; font-size: 8.3pt; }
+
+/* mock de post do Telegram */
+.post {
+  width: 88mm;
+  background: #fff;
+  border-radius: 4mm;
+  box-shadow: 0 3mm 9mm rgba(18,18,31,.16);
+  overflow: hidden;
+  font-size: 9.2pt;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+}
+.post .foto { height: 44mm; background: linear-gradient(135deg, #f2f2f7, #e2e2ec); display: flex; align-items: center; justify-content: center; color: #9a9aad; font-weight: 600; font-size: 8.5pt; }
+.post .corpo { padding: 3.5mm 4mm 1mm; line-height: 1.5; }
+.post .corpo .riscado { text-decoration: line-through; color: #9a9aad; }
+.post .botao { margin: 2mm 4mm 4mm; background: var(--tg); color: #fff; text-align: center; font-weight: 700; border-radius: 2mm; padding: 2mm; font-size: 9pt; }
+.lado-a-lado { display: flex; gap: 8mm; align-items: center; break-inside: avoid; }
+.lado-a-lado > .texto { flex: 1; }
+
+ul.check { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.check li { padding-left: 6.5mm; position: relative; margin-bottom: 1.8mm; }
+ul.check li::before {
+  content: "✓"; position: absolute; left: 0; top: .2mm;
+  width: 4.4mm; height: 4.4mm; border-radius: 50%;
+  background: var(--yellow); color: var(--ink);
+  font: 800 7pt/4.4mm 'Inter', sans-serif; text-align: center;
+}
+ul.x li::before { content: "!"; background: #ffd9bf; color: #b54700; }
+
+.marca-dagua { position: fixed; top: 0; right: 0; font: 700 7.5pt 'Inter', sans-serif; letter-spacing: .18em; color: #c7400a; text-transform: uppercase; }
+.final {
+  background: var(--ink); color: #fff; border-radius: 5mm; padding: 9mm; text-align: center; break-inside: avoid;
+}
+.final img { width: 34mm; }
+.final h2 { color: #fff; justify-content: center; margin-top: 3mm; }
+.final p { color: #cfcfe0; }
