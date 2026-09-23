@@ -43,6 +43,8 @@ bot_ofertas/
 ├── scripts/
 │   ├── testar_api.py    # diagnóstico da API
 │   └── testar_lista.py  # teste das listas de recomendação
+├── deploy/
+│   └── bot-ofertas.service  # serviço systemd para rodar 24h em Linux
 ├── data/                # histórico (gerado em runtime)
 ├── .env.example
 └── requirements.txt
@@ -96,9 +98,26 @@ Preencha o `.env`.
 python -m bot_ofertas.bot
 ```
 
-A primeira oferta sai 10 segundos depois de iniciar, e as seguintes a cada
-`POST_INTERVAL_MINUTES`. O bot precisa ficar rodando. Para deixá-lo 24h no ar,
-use um servidor/VPS ou um PC sempre ligado.
+Ao iniciar, o bot retoma o ritmo a partir do último post: se já passou
+`POST_INTERVAL_MINUTES` desde ele, posta em 10 segundos. Senão, espera o restante do intervalo.
+
+### Rodando 24h num servidor Linux
+
+```bash
+git clone https://github.com/MatheusSenra/bot-ofertas.git
+cd bot-ofertas
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+# copie o .env (e data/historico.db, se já tiver histórico) para o servidor
+.venv/bin/python -m scripts.testar_lista   # confirme que o ML não bloqueia o IP do servidor
+sudo cp deploy/bot-ofertas.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now bot-ofertas
+```
+
+Logs: `journalctl -u bot-ofertas -f`. O arquivo de serviço assume o usuário
+`ubuntu` e o projeto em `/home/ubuntu/bot-ofertas`. Ajuste se for diferente.
+**Não rode duas cópias do bot com o mesmo token**, porque os posts saem duplicados.
 
 ### Comandos (no privado, só para quem está em `TELEGRAM_ADMIN_IDS`)
 | Comando | O que faz |

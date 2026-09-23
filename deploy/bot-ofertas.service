@@ -1,0 +1,22 @@
+# Serviço systemd para rodar o bot 24h em Linux (Ubuntu/Debian).
+# Instalação:
+#   sudo cp deploy/bot-ofertas.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now bot-ofertas
+# Ajuste User e os caminhos se o projeto não estiver em /home/ubuntu/bot-ofertas.
+
+[Unit]
+Description=Bot de ofertas Mercado Livre -> Telegram
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/bot-ofertas
+ExecStart=/home/ubuntu/bot-ofertas/.venv/bin/python -m bot_ofertas.bot
+Restart=always
+RestartSec=30
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
