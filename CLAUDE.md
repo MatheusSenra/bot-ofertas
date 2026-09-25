@@ -5,7 +5,7 @@ com link de afiliado num canal e converte links no privado. Visão geral e setup
 
 ## Estrutura
 - `bot_ofertas/bot.py` — entrada (`python -m bot_ofertas.bot`), loop de postagem, comandos /start /postar /status, conversão de links
-- `bot_ofertas/ofertas.py` — escolha do próximo produto (lista → baixou de preço → mais vendidos) e `/postar <link>`
+- `bot_ofertas/ofertas.py` — escolha do próximo produto (lista → baixou de preço → mais vendidos → repost de mais vendidos antigos) e `/postar <link>`
 - `bot_ofertas/lista.py` — lê listas e links meli.la pelo JSON `polycards` da página (sem API oficial; sensível a mudança de layout)
 - `bot_ofertas/mercadolivre.py` — API oficial (client_credentials; `/sites/.../search` e `/items` dão 403, por isso usa `/highlights` + `/products`)
 - `bot_ofertas/affiliate.py` — link de afiliado = link do produto + `matt_tool`/`matt_word`

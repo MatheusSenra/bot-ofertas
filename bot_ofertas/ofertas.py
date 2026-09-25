@@ -6,6 +6,8 @@ Ordem de prioridade:
    pelo menos REPOST_MIN_DROP_PERCENT desde o último post.
 3. Mais vendido de uma categoria (alternando entre as categorias), nunca
    postado, preferindo os que têm desconto.
+4. Sem nada novo: mais vendido postado há REPOST_HIGHLIGHTS_AFTER_DAYS+ dias,
+   preferindo o que baixou de preço; senão, o postado há mais tempo.
 """
 
 import logging
@@ -100,10 +102,54 @@ async def _from_highlights(ml: MercadoLivreClient, ml_config: MLConfig, history:
     return None
 
 
+async def _repost_highlights(
+    ml: MercadoLivreClient, ml_config: MLConfig, bot_config: BotConfig, history: PostHistory
+) -> Offer | None:
+    """Reposta um mais vendido antigo quando não há nada novo, para o canal não parar."""
+    candidates = {}
+    for category in ml_config.categories:
+        try:
+            product_ids = await ml.get_highlights(category)
+        except MLApiError as e:
+            log.warning("Mais vendidos de %s indisponíveis: %s", category, e)
+            continue
+        for product_id in product_ids:
+            last = history.last_post(product_id)
+            if last and last.age_days >= bot_config.repost_highlights_after_days:
+                candidates[product_id] = last
+
+    # Avalia os postados há mais tempo primeiro (cada um custa 2 chamadas à API).
+    oldest_first = sorted(candidates.items(), key=lambda c: c[1].posted_at)[:HIGHLIGHTS_SCAN_LIMIT]
+    drops, fallback = [], None
+    for product_id, last in oldest_first:
+        try:
+            product = await ml.get_product(product_id)
+        except MLApiError as e:
+            log.warning("Produto %s ignorado: %s", product_id, e)
+            continue
+        if product is None:
+            continue
+        drop = (1 - product.price / last.price) * 100
+        if drop >= bot_config.repost_min_drop_percent:
+            drops.append((drop, product, last.price))
+        fallback = fallback or product
+
+    if drops:
+        _, product, previous = max(drops, key=lambda d: d[0])
+        return Offer(product, SOURCE_HIGHLIGHTS, previous_price=previous)
+    if fallback:
+        return Offer(fallback, SOURCE_HIGHLIGHTS)
+    return None
+
+
 async def next_offer(
     ml: MercadoLivreClient, ml_config: MLConfig, bot_config: BotConfig, history: PostHistory
 ) -> Offer | None:
-    return await _from_lists(ml_config, bot_config, history) or await _from_highlights(ml, ml_config, history)
+    return (
+        await _from_lists(ml_config, bot_config, history)
+        or await _from_highlights(ml, ml_config, history)
+        or await _repost_highlights(ml, ml_config, bot_config, history)
+    )
 
 
 async def find_product_by_link(ml: MercadoLivreClient, ml_config: MLConfig, url: str) -> Product | None:

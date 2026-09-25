@@ -26,7 +26,10 @@ A cada `POST_INTERVAL_MINUTES`, o bot posta **uma** oferta no canal. A escolha s
    `REPOST_AFTER_DAYS` dias e o preço caiu `REPOST_MIN_DROP_PERCENT`% ou mais.
    O post sai como "📉 BAIXOU DE PREÇO!".
 3. **Mais vendidos das categorias em `ML_CATEGORIES`.** As categorias se alternam a cada post,
-   e produtos com desconto têm preferência. Um mesmo produto nunca é postado duas vezes.
+   e produtos com desconto têm preferência.
+4. **Sem nada novo:** um mais vendido postado há pelo menos `REPOST_HIGHLIGHTS_AFTER_DAYS` dias
+   (padrão 7). Os que baixaram de preço têm prioridade e saem como "BAIXOU DE PREÇO!". Assim o
+   canal não para quando os mais vendidos se esgotam.
 
 O histórico fica em `data/historico.db` (SQLite).
 

@@ -61,6 +61,7 @@ class BotConfig:
     interval_minutes: float
     repost_after_days: float
     repost_min_drop_percent: float
+    repost_highlights_after_days: float
 
     @classmethod
     def from_env(cls) -> "BotConfig":
@@ -71,4 +72,5 @@ class BotConfig:
             interval_minutes=_number("POST_INTERVAL_MINUTES", 120),
             repost_after_days=_number("REPOST_AFTER_DAYS", 3),
             repost_min_drop_percent=_number("REPOST_MIN_DROP_PERCENT", 5),
+            repost_highlights_after_days=_number("REPOST_HIGHLIGHTS_AFTER_DAYS", 7),
         )

@@ -110,7 +110,8 @@ class MercadoLivreClient:
             # Token revogado/expirado antes do previsto: força renovação e tenta de novo.
             self._token = None
             return await self._get(path, params, retry_auth=False)
-        if resp.status_code != 200:
+        # A API às vezes responde 206 (Partial Content) com o corpo completo: qualquer 2xx é sucesso.
+        if not resp.is_success:
             raise MLApiError(resp.status_code, str(resp.url), resp.text)
         return resp.json()
 
