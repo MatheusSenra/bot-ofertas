@@ -67,7 +67,8 @@ def _parse_card(card: dict) -> Product | None:
         free_shipping="grátis" in (shipping.get("text") or "").lower() and not shipping.get("additional_text"),
         coupon=_render_text(coupons[0]) if coupons else None,
         item_id=meta.get("id"),
-        badge=(comps.get("highlight") or {}).get("text"),
+        # O selo pode ter marcador de ícone, ex.: "{black_friday_icon} OFERTA IMPERDÍVEL".
+        badge=(_render_text(comps["highlight"]) or None) if comps.get("highlight") else None,
         discount_label=(price.get("discount_label") or {}).get("text"),
     )
 
